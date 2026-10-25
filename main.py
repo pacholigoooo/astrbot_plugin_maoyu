@@ -102,15 +102,18 @@ class MaoyuPlugin(Star):
         arg=parts[1] if len(parts)>1 else ''
         async for result in self._handle(event,action,arg):
             yield result
+        event.stop_event()
 
     @filter.command('养毛玉')
     async def welcome(self,event: AstrMessageEvent):
         """打开养毛玉帮助。"""
         async for result in self._handle(event,'帮助',''):
             yield result
+        event.stop_event()
 
     async def _handle(self,event,action,arg):
-        event.stop_event()  # Commands must not also trigger the LLM.
+        # Suppress default AI only; stopping propagation here truncates later yields.
+        event.should_call_llm(False)
         if self._closing:
             yield event.plain_result('毛玉小院正在重载，请稍后再试。')
             return

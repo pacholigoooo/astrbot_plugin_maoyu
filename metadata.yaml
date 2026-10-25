@@ -1,7 +1,7 @@
 name: astrbot_plugin_maoyu
 display_name: 东方毛玉小院
 desc: 离线像素养毛玉，十八套东方装饰、成长成就、散步收藏、自动备份与独立群存档。
-version: v1.4.0
+version: v1.4.1
 author: pachi
 astrbot_version: '>=4.9.2'
 short_desc: 像素养毛玉，十八套东方装饰，离线陪伴与成长收藏。

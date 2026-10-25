@@ -1,6 +1,6 @@
 {
   "name": "koishi-plugin-maoyu-courtyard",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "东方毛玉小院：18套东方像素装饰，AstrBot/Koishi共用离线养成核心，需要Python和Pillow。",
   "main": "koishi/index.cjs",
   "license": "MIT",

@@ -39,6 +39,8 @@ jobs:
         working-directory: astrbot_plugin_maoyu
       - run: python tools/framework_smoke.py
         working-directory: astrbot_plugin_maoyu
+      - run: python tools/pipeline_smoke.py
+        working-directory: astrbot_plugin_maoyu
 
   koishi:
     runs-on: ubuntu-latest

@@ -19,6 +19,7 @@ class Event:
     def get_group_id(self):return self.group
     def get_sender_id(self):return self.owner
     def stop_event(self):self.stopped=True
+    def should_call_llm(self,value):self.call_llm=value
     def plain_result(self,text):return ('text',text)
     def image_result(self,path):return ('image',path)
 
@@ -52,7 +53,7 @@ class AdapterTests(unittest.IsolatedAsyncioTestCase):
         await self.call('领养','白白');await self.plugin.terminate();self.plugin=self.mod.MaoyuPlugin(object(),{'send_images':False});self.addAsyncCleanup(self.plugin.terminate)
         self.assertIn('白白',(await self.call())[0][1])
     async def test_stops_llm(self):
-        e=Event();await self.call('帮助',event=e);self.assertTrue(e.stopped)
+        e=Event();await self.call('帮助',event=e);self.assertTrue(e.stopped);self.assertFalse(e.call_llm)
     async def test_identity_separates_bots_groups_and_users(self):
         ids=[self.plugin._identity(e) for e in [Event(),Event(platform='bot-b'),Event(group='b'),Event(owner='2'),Event(group='')]]
         self.assertEqual(len(set(ids)),5)

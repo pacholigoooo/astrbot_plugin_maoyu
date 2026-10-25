@@ -1,3 +1,10 @@
+# 1.4.1 图片发送回归（2026-10-25）
+
+- 复现1.4.0缺陷：在真实ProcessStage、StarRequestSubStage、PipelineScheduler及RespondStage路径中，领养只发送文字，没有Image组件；回归断言MISSING_IMAGE_IN_REAL_PIPELINE失败。
+- 修复后，AstrBot4.9.2及4.29.1各20条指令通过上述真实调度路径；需要图片的指令明确验证Image组件进入最终发送阶段，包含状态卡、衣柜、GIF。平台网络传输为记录替身，不代表真实QQ上传已验证。
+- 109项本地单元测试和6组Koishi测试通过。保留原存档结构、外观和玩法。
+- 旧版framework_smoke直接迭代handler，虽验证了消息链生成，但没有覆盖调度器中止生成器的行为；不能将旧记录理解为真实平台完整发图成功。新增pipeline_smoke已纳入CI。
+
 # 1.4.0 验证记录（2026-10-25）
 
 - Python109项本地测试通过，包含18套装饰、三页衣柜、非法页码、免费新装饰及分页状态不入存档。
