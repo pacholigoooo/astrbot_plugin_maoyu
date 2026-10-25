@@ -2,7 +2,7 @@
 
 这个目录可作为 GitHub 仓库根目录。建议仓库名为 `astrbot_plugin_maoyu`。
 
-本次1.3.0已按用户新授权运行测试，详见 TEST_REPORT.md。
+本次1.4.0已按用户新授权运行测试，详见 TEST_REPORT.md。
 
 ## 发布前与后续维护
 
@@ -16,7 +16,7 @@
 
 ## 分发方式
 
-- GitHub Release：把生成的 ZIP 与 SHA256 文件附到 v1.3.0 Release。
+- GitHub Release：把生成的 ZIP 与 SHA256 文件附到 v1.4.0 Release。
 - AstrBot 插件市场：先有公开 GitHub 仓库，再到官方发布入口提交。工具不会替你发布或创建账号。
 - 已附 GitHub Actions CI，但尚未在你的GitHub仓库上运行；上传后才会触发。工作流只申请 contents:read 权限。
 

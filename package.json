@@ -1,7 +1,7 @@
 {
   "name": "koishi-plugin-maoyu-courtyard",
-  "version": "1.3.0",
-  "description": "东方像素养毛玉：与AstrBot共用离线养成核心，需要Python和Pillow。",
+  "version": "1.4.0",
+  "description": "东方毛玉小院：18套东方像素装饰，AstrBot/Koishi共用离线养成核心，需要Python和Pillow。",
   "main": "koishi/index.cjs",
   "license": "MIT",
   "author": "pachi",
@@ -40,7 +40,7 @@
   ],
   "koishi": {
     "description": {
-      "zh": "离线像素养毛玉，需要Python 3.10+和Pillow，非纯Node插件。"
+      "zh": "东方毛玉小院：18套装饰、散步收藏和日常养成。需要Python 3.10+和Pillow。"
     }
   },
   "repository": {

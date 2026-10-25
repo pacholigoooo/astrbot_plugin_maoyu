@@ -145,9 +145,9 @@ class GameTests(unittest.TestCase):
     def test_wardrobe_catalog(self):
         text,p,kind=self.run_action('衣柜');self.assertEqual(kind,'wardrobe');self.assertIn('灵梦',text)
     def test_all_costumes_obtainable(self):
-        self.patch(coins=1000)
+        self.patch(coins=10000)
         for key in list(COSTUMES)[1:]:self.run_action('购买',key)
-        self.assertEqual(len(self.pet()['owned']),7)
+        self.assertEqual(len(self.pet()['owned']),len(COSTUMES))
     def test_database_integrity(self):
         with sqlite3.connect(self.path) as c:self.assertEqual(c.execute('PRAGMA integrity_check').fetchone()[0],'ok')
 

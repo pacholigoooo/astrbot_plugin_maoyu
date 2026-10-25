@@ -7,12 +7,12 @@ from PIL import Image, ImageDraw, ImageFont
 from .game import COSTUMES, level, presentation
 from .version import __version__
 
-INK = '#343e35'
-PAPER = '#f6f3e7'
-GREEN = '#466653'
-MUTED = '#657164'
-LINE = '#d2d8c7'
-PANEL = '#eeeedf'
+INK = '#30394f'
+PAPER = '#f8f9fe'
+ACCENT = '#6879ae'
+MUTED = '#737d96'
+LINE = '#d9def0'
+PANEL = '#edf0fa'
 ASSETS = Path(__file__).parent / 'assets'
 CARD_SIZE = (800, 1040)
 WARDROBE_SIZE = (800, 1320)
@@ -61,16 +61,16 @@ def _wrap(draw, text, size, width, max_lines):
 def _right(draw, x, y, text, size=22, color=INK):
     _text(draw, (x-draw.textlength(str(text), font=font(size)), y), text, size, color)
 
-def _pill(draw, xy, text, *, fill=GREEN, color=PAPER, size=20):
+def _pill(draw, xy, text, *, fill=ACCENT, color=PAPER, size=20):
     x, y = xy
     w = math.ceil(draw.textlength(text, font=font(size)))+24
     draw.rectangle((x, y, x+w, y+36), fill=fill)
     _text(draw, (x+12, y+3), text, size, color)
     return w
 
-def _bar(draw, box, ratio, color=GREEN):
+def _bar(draw, box, ratio, color=ACCENT):
     x, y, r, b = box
-    draw.rectangle(box, fill='#dde2d2')
+    draw.rectangle(box, fill='#dfe5f3')
     width = int((r-x+1)*max(0, min(1, ratio)))
     if width:
         draw.rectangle((x, y, x+width-1, b), fill=color)
@@ -125,15 +125,15 @@ def render_card(p, output, now, *, animated=False):
     for frame in (0, 1, 0, 1) if animated else (0,):
         im = Image.new('RGB', CARD_SIZE, PAPER)
         d = ImageDraw.Draw(im)
-        d.rectangle((0, 0, 799, 7), fill=GREEN)
-        _text(d, (32, 23), '毛玉小院', 30, GREEN)
+        d.rectangle((0, 0, 799, 7), fill=ACCENT)
+        _text(d, (32, 23), '东方毛玉小院', 30, ACCENT)
         _right(d, 768, 30, '幻想乡 · 陪伴日常', 20, MUTED)
         d.line((32, 75, 768, 75), fill=LINE, width=2)
         name_size = 38
         while d.textlength(p['name'], font=font(name_size)) > 510 and name_size > 22:
             name_size -= 1
         _text(d, (32, 88), p['name'], name_size)
-        _right(d, 768, 98, 'Lv.'+_compact(level(p['xp'])), 28, GREEN)
+        _right(d, 768, 98, 'Lv.'+_compact(level(p['xp'])), 28, ACCENT)
         _text(d, (32, 139), '今日装饰  /  '+COSTUMES[p['costume']]['name'], 22, MUTED)
         scene = _scene(p['costume'], frame=frame, size=(736, 312))
         im.paste(scene, (32, 182))
@@ -141,26 +141,26 @@ def render_card(p, output, now, *, animated=False):
         _pill(d, (48, 198), state, fill=accent)
         # Caption outside the artwork: no pseudo-expression changes to generated art.
         _text(d, (32, 507), message, 23, accent)
-        for i, (label, key, color) in enumerate((('饱食', 'food', '#bb8a51'), ('心情', 'mood', '#bc7984'), ('精力', 'energy', '#648c78'))):
+        for i, (label, key, color) in enumerate((('饱食', 'food', '#a28bb6'), ('心情', 'mood', '#bb8ca4'), ('精力', 'energy', '#7f9cc3'))):
             x = 32+i*250
             d.rectangle((x, 552, x+235, 655), fill=PANEL)
             _text(d, (x+14, 562), label, 23)
             _right(d, x+221, 564, f'{round(p[key])}/100', 21, color)
             _bar(d, (x+14, 610, x+221, 623), p[key]/100, color)
         lv = level(p['xp']); lower = 50*(lv-1)**2; upper = 50*lv**2
-        _text(d, (32, 676), '成长', 22, GREEN)
+        _text(d, (32, 676), '成长', 22, ACCENT)
         _right(d, 768, 676, f'{_compact(p["xp"]-lower)} / {_compact(upper-lower)} 经验', 21, MUTED)
         _bar(d, (112, 689, 482, 700), (p['xp']-lower)/(upper-lower))
         for i, text in enumerate((f'团子币  {_compact(p["coins"])}', f'散步  {_compact(p["visits"])} 次', f'收藏  {len(p["souvenirs"])}/12')):
             _text(d, (32+i*250, 725), text, 22)
         d.line((32, 770, 768, 770), fill=LINE, width=2)
-        _text(d, (32, 787), '小院手记', 23, GREEN)
+        _text(d, (32, 787), '小院手记', 23, ACCENT)
         _right(d, 768, 790, '完整记录：/毛玉 日记', 18, MUTED)
         entry = p['diary'][-1] if p.get('diary') else '今天的小院很安静，等你来写下第一段故事。'
         for i, line in enumerate(_wrap(d, entry, 22, 736, 2)):
             _text(d, (32, 829+i*32), line, 22)
-        d.rectangle((32, 909, 767, 958), fill='#e4eadc')
-        _text(d, (46, 919), _ellipsis(d, _care(p, now), 21, 706), 21, GREEN)
+        d.rectangle((32, 909, 767, 958), fill='#e8edf9')
+        _text(d, (46, 919), _ellipsis(d, _care(p, now), 21, 706), 21, ACCENT)
         _text(d, (32, 978), '发送指令：/毛玉 喂食 · 摸摸 · 散步 · 衣柜', 20, MUTED)
         _right(d, 768, 1011, 'v'+__version__, 14, MUTED)
         frames.append(im)
@@ -173,38 +173,40 @@ def render_card(p, output, now, *, animated=False):
 
 def _wardrobe_state(key, p):
     if p and key == p['costume']:
-        return '穿戴中', GREEN
+        return '穿戴中', ACCENT
     if p and key in p['owned']:
-        return '已拥有', '#647460'
+        return '已拥有', '#78839c'
     if p and p.get('gift'):
-        return '首套可免费选', '#85652e'
-    return f'{COSTUMES[key]["price"]} 团子币', '#85652e'
+        return '首套可免费选', '#88739c'
+    return f'{COSTUMES[key]["price"]} 团子币', '#88739c'
 
 def render_wardrobe(output, p=None):
     im = Image.new('RGB', WARDROBE_SIZE, PAPER); d = ImageDraw.Draw(im)
-    d.rectangle((0, 0, 799, 7), fill=GREEN)
-    _text(d, (32, 23), '毛玉衣柜', 32, GREEN)
+    d.rectangle((0, 0, 799, 7), fill=ACCENT)
+    _text(d, (32, 23), '东方毛玉衣柜', 32, ACCENT)
     if p:
-        _right(d, 768, 32, '团子币  '+_compact(p['coins']), 23, GREEN)
-    _text(d, (32, 78), '六套东方装饰，陪同一只毛玉过日常', 23)
+        _right(d, 768, 32, '团子币  '+_compact(p['coins']), 23, ACCENT)
+    pages = math.ceil((len(COSTUMES)-1)/6)
+    page = max(1, min(pages, int(p.get('_wardrobe_page', 1)))) if p else 1
+    _text(d, (32, 78), f'{len(COSTUMES)-1}套东方装饰 · 第 {page}/{pages} 页', 23)
     banner = ('首套免费任选，选好后发送 /毛玉 购买 名称' if p and p.get('gift') else
               '已拥有的装饰可随时换上，不会再次扣款') if p else '领养后，首套主题装饰免费任选'
-    d.rectangle((32, 119, 767, 165), fill='#e4eadc')
-    _text(d, (46, 127), banner, 21, GREEN)
-    for i, key in enumerate(list(COSTUMES)[1:]):
+    d.rectangle((32, 119, 767, 165), fill='#e8edf9')
+    _text(d, (46, 127), banner, 21, ACCENT)
+    for i, key in enumerate(list(COSTUMES)[1+(page-1)*6:1+page*6]):
         x = 32+(i%2)*376; y = 189+(i//2)*324
         active = bool(p and key == p['costume'])
-        d.rectangle((x, y, x+359, y+303), fill=PANEL, outline=GREEN if active else LINE, width=3 if active else 1)
+        d.rectangle((x, y, x+359, y+303), fill=PANEL, outline=ACCENT if active else LINE, width=3 if active else 1)
         im.paste(_scene(key, size=(328, 172)), (x+16, y+16))
-        _text(d, (x+16, y+199), COSTUMES[key]['name'], 26, GREEN)
+        _text(d, (x+16, y+196), COSTUMES[key]['name'], 23, ACCENT)
         state, color = _wardrobe_state(key, p)
-        _right(d, x+344, y+206, state, 18, color)
-        _text(d, (x+16, y+244), COSTUMES[key]['desc'], 19, MUTED)
+        _right(d, x+344, y+226, state, 18, color)
+        _text(d, (x+16, y+258), COSTUMES[key]['desc'], 17, MUTED)
         if p and key not in p['owned'] and not p.get('gift') and p['coins'] < COSTUMES[key]['price']:
-            _text(d, (x+16, y+274), f'还差 {COSTUMES[key]["price"]-p["coins"]} 团子币', 17, '#926445')
-    _text(d, (32, 1175), '购买：/毛玉 购买 灵梦    换装：/毛玉 换装 灵梦', 22, GREEN)
-    _text(d, (32, 1217), '恢复原味：/毛玉 换装 原味毛玉', 22, GREEN)
-    _text(d, (32, 1263), '这是衣柜预览图，请在聊天中发送指令。', 20, MUTED)
+            _text(d, (x+16, y+282), f'还差 {COSTUMES[key]["price"]-p["coins"]} 团子币', 17, '#a16f8c')
+    _text(d, (32, 1175), '购买：/毛玉 购买 灵梦    换装：/毛玉 换装 灵梦', 22, ACCENT)
+    _text(d, (32, 1217), '恢复原味：/毛玉 换装 原味毛玉', 22, ACCENT)
+    _text(d, (32, 1263), f'翻页：/毛玉 衣柜 {page % pages + 1}    图片不可点击，请发送指令', 20, MUTED)
     _right(d, 768, 1292, 'v'+__version__, 14, MUTED)
     output = Path(output); output.parent.mkdir(parents=True, exist_ok=True)
     im.save(output)

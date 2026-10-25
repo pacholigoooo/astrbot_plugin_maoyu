@@ -4,7 +4,7 @@ const fs = require('node:fs/promises')
 const path = require('node:path')
 const { Bridge } = require('./bridge.cjs')
 exports.name = 'maoyu-courtyard'
-exports.usage = '离线养毛玉。需要 Node.js 18+、Python 3.10+ 和 Pillow；在 Koishi 所在环境安装 Python 依赖。发送「毛玉 帮助」。图片/GIF取决于消息适配器。'
+exports.usage = '东方毛玉小院，18套装饰。需要 Node.js 18+、Python 3.10+ 和 Pillow；在 Koishi 所在环境安装 Python 依赖。发送「毛玉 帮助」。图片/GIF取决于消息适配器。'
 exports.Config = Schema.object({
   python: Schema.string().default(process.platform === 'win32' ? 'python' : 'python3').description('Python可执行文件路径（不是shell命令）'),
   sendImages: Schema.boolean().default(true).description('发送像素卡和GIF'),
@@ -45,6 +45,6 @@ exports.apply = (ctx, config) => {
       return '操作已保存，图片读取失败。可发送「毛玉 看看」。'
     }
   }
-  ctx.command('毛玉 [payload:text]', '领养和照顾像素毛玉').action(({ session }, payload) => handle(session, payload))
+  ctx.command('毛玉 [payload:text]', '东方毛玉小院：领养和照顾像素毛玉').action(({ session }, payload) => handle(session, payload))
   ctx.command('养毛玉', '毛玉帮助菜单').action(({ session }) => handle(session, '帮助'))
 }

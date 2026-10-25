@@ -19,6 +19,18 @@ COSTUMES = {
     'patchouli': {'name': '帕秋莉', 'price': 100, 'desc': '月亮睡帽 · 迷你魔导书'},
     'remilia': {'name': '蕾米莉亚', 'price': 120, 'desc': '粉色软帽 · 蝙蝠翅膀'},
     'suwako': {'name': '诹访子', 'price': 120, 'desc': '青蛙眼帽 · 软绵绵'},
+    'sakuya': {'name': '十六夜咲夜', 'price': 100, 'desc': '女仆头饰 · 银色怀表'},
+    'youmu': {'name': '魂魄妖梦', 'price': 100, 'desc': '黑色发结 · 半灵'},
+    'yuyuko': {'name': '西行寺幽幽子', 'price': 120, 'desc': '幽蓝软帽 · 樱花折扇'},
+    'alice': {'name': '爱丽丝', 'price': 100, 'desc': '红色发箍 · 小人偶'},
+    'sanae': {'name': '东风谷早苗', 'price': 100, 'desc': '蛙蛇发饰 · 小御币'},
+    'yukari': {'name': '八云紫', 'price': 140, 'desc': '紫色软帽 · 小洋伞'},
+    'ran': {'name': '八云蓝', 'price': 140, 'desc': '狐耳软帽 · 九尾'},
+    'chen': {'name': '橙', 'price': 100, 'desc': '月牙软帽 · 猫尾'},
+    'aya': {'name': '射命丸文', 'price': 120, 'desc': '天狗小帽 · 羽扇'},
+    'reisen': {'name': '铃仙', 'price': 100, 'desc': '月兔长耳 · 月饰'},
+    'tenshi': {'name': '比那名居天子', 'price': 120, 'desc': '桃子礼帽 · 要石'},
+    'flandre': {'name': '芙兰朵露', 'price': 160, 'desc': '白色软帽 · 水晶翼'},
 }
 WALKS = [
     ('博丽神社', '毛玉钻进落叶堆，顶着一片红叶滚了回来。', 15, '红叶'),
@@ -34,11 +46,11 @@ WALKS = [
     ('图书馆', '它缩在书边听翻页声，把掉下来的丝带仔细卷好。', 19, '紫色书签'),
     ('河岸', '它把小石子排成一列，挑了最圆的一颗带回家。', 17, '圆石子'),
 ]
-HELP = ('养毛玉 · 指令\n'
+HELP = ('东方毛玉小院 · 养毛玉指令\n'
         '/毛玉 领养 名字　 /毛玉 看看\n'
         '/毛玉 喂食　 /毛玉 摸摸　 /毛玉 玩耍\n'
         '/毛玉 散步　 /毛玉 睡觉　 /毛玉 起床\n'
-        '/毛玉 签到　 /毛玉 衣柜　 /毛玉 图鉴\n'
+        '/毛玉 签到　 /毛玉 衣柜 1～3　 /毛玉 图鉴\n'
         '/毛玉 购买 灵梦　 /毛玉 换装 灵梦\n'
         '/毛玉 改名 名字　 /毛玉 动图\n'
         '/毛玉 日记　 /毛玉 成就　 /毛玉 帮助\n'
@@ -71,7 +83,7 @@ def level(xp):
 
 def resolve_costume(name):
     name = name.strip()
-    aliases = {'原味': 'plain', '卸下': 'plain', '帕琪': 'patchouli', '蕾米': 'remilia', '青蛙帽': 'suwako'}
+    aliases = {'原味': 'plain', '卸下': 'plain', '帕琪': 'patchouli', '蕾米': 'remilia', '青蛙帽': 'suwako', '咲夜': 'sakuya', '妖梦': 'youmu', '幽幽子': 'yuyuko', '早苗': 'sanae', '紫': 'yukari', '蓝': 'ran', '文': 'aya', '天子': 'tenshi', '芙兰': 'flandre'}
     if name in aliases:
         return aliases[name]
     for key, info in COSTUMES.items():
@@ -152,7 +164,7 @@ class Game:
             if row is not None and not isinstance(pet, dict):
                 raise GameError('存档格式异常，请联系管理员；原文件已保留。')
             if pet is not None:
-                for key in ('_presentation', '_display_now', '_display_offset'):
+                for key in ('_presentation', '_display_now', '_display_offset', '_wardrobe_page'):
                     pet.pop(key, None)
                 self._validate(pet)
                 if 'achievements' not in pet:
@@ -276,12 +288,22 @@ class Game:
             p['sleep_until'] = 0
             text = '毛玉揉揉眼睛，慢吞吞地伸了个懒腰。'
         elif action == '衣柜':
-            lines = ['毛玉衣柜 · 永久装饰（纯外观）']
-            for key, item in COSTUMES.items():
-                state = '穿戴中' if key == p['costume'] else ('已拥有' if key in p['owned'] else str(item['price']) + '币')
+            pages = math.ceil((len(COSTUMES)-1)/6)
+            if arg and (not arg.strip().isascii() or not arg.strip().isdigit()):
+                raise GameError(f'页码请用1～{pages}，例如 /毛玉 衣柜 2')
+            page = int(arg.strip()) if arg else 1
+            if not 1 <= page <= pages:
+                raise GameError(f'衣柜共{pages}页，请输入 /毛玉 衣柜 1～{pages}')
+            p['_wardrobe_page'] = page
+            lines = [f'东方毛玉衣柜 · 第{page}/{pages}页 · 永久装饰（纯外观）']
+            for key in list(COSTUMES)[1+(page-1)*6:1+page*6]:
+                item = COSTUMES[key]
+                state = ('穿戴中' if key == p['costume'] else '已拥有' if key in p['owned']
+                         else '首套可免费选' if p['gift'] else str(item['price'])+'币')
                 lines.append(f'{item["name"]} · {state}')
             lines += ['第一套主题装饰免费任选。' if p['gift'] else f'余额：{p["coins"]} 团子币',
-                      '/毛玉 购买 灵梦　/毛玉 换装 灵梦']
+                      f'翻页：/毛玉 衣柜 {page % pages + 1}',
+                      '/毛玉 购买 名称　/毛玉 换装 名称　/毛玉 换装 原味']
             return '\n'.join(lines), 'wardrobe'
         elif action == '购买':
             key = resolve_costume(arg)
@@ -421,13 +443,13 @@ def presentation(p, now, tz=None):
         care = f'再睡 {minutes} 分钟自然醒，也可 /毛玉 起床'
     else:
         if p['food'] < 35:
-            state, message, color = '想吃点心', '小肚子咕咕叫，喂一口就好', '#956239'
+            state, message, color = '想吃点心', '小肚子咕咕叫，喂一口就好', '#956d96'
         elif p['energy'] < 25:
             state, message, color = '有点困了', '今天玩累了，回窝休息一会儿', '#686488'
         elif p['mood'] < 40:
             state, message, color = '想你陪陪', '摸摸这团软乎乎的小家伙', '#9b5f6d'
         else:
-            state, message, color = '精神不错', '今天也想和你待在一起', '#466653'
+            state, message, color = '精神不错', '今天也想和你待在一起', '#6879ae'
         if p['food'] < 50:
             care = '现在适合喂点心：/毛玉 喂食'
         elif p['energy'] < 25:
