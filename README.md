@@ -1,4 +1,4 @@
-# 毛玉小院 · AstrBot 插件
+# 毛玉小院 · AstrBot / Koishi 插件
 
 一只软乎乎的毛玉，六套东方主题装饰。轻量、离线、不调用大模型。
 
@@ -12,7 +12,7 @@
 仓库：https://github.com/pacholigoooo/astrbot_plugin_maoyu
 
 - AstrBot：插件管理 → 从链接安装，粘贴上面的仓库地址。后续在插件管理中检查更新/更新插件；metadata.yaml 的 repo 指向同一仓库。
-- Koishi：在 Koishi 应用目录运行 `npm install github:pacholigoooo/astrbot_plugin_maoyu#main`，安装 Python 依赖后在控制台启用 `maoyu-courtyard`。更新时再次安装该 GitHub main 引用并重启/重载插件。详细依赖、Docker和备份步骤见 [KOISHI.md](KOISHI.md)。
+- Koishi：在 Koishi 应用目录运行 `npm install git+https://github.com/pacholigoooo/astrbot_plugin_maoyu.git#main`，安装 Python 依赖后在控制台启用 `maoyu-courtyard`。更新时再次安装该 GitHub main 引用并重启/重载插件。详细依赖、Docker和备份步骤见 [KOISHI.md](KOISHI.md)。
 - GitHub安装不等于进入官方插件市场：AstrBot市场另需提交审核；Koishi市场另需发布npm。本仓库不宣称已上架任一市场。
 - 两边存档隔离，不自动同步。升级前停机备份，勿删除数据目录。
 
@@ -116,16 +116,16 @@
 
 本版表情固定为愉快表情；饥饿/睡眠由文字状态标明。GIF仅为整体轻晃，不冒充已经做好的闭眼睡觉或喂食动画。
 
-通过 AstrBot 的 `event.image_result` 发送本地图片。部分适配器或官方平台可能要求可访问的图片URL，或不支持GIF；这种情况下先关掉 `send_images` 文字游玩。**1.1.0曾在真实 AstrBot 4.9.2、4.29.1 的离线插件加载器和真实消息对象中验证；1.2.0历史记录为98项本地测试通过；1.2.1没有运行测试或真实框架验证**，但尚未连接实际QQ账号、发送到真实群；不能保证所有适配器都能直接发图。
+通过 AstrBot 的 `event.image_result` 发送本地图片。部分适配器或官方平台可能要求可访问的图片URL，或不支持GIF；这种情况下先关掉 `send_images` 文字游玩。**1.3.0通过104项Python测试、6组Koishi测试，以及AstrBot 4.9.2/4.29.1各20条真实框架指令检查**，但尚未连接实际QQ账号、发送到真实群；不能保证所有适配器都能直接发图。
 
-## 1.2.1 界面
+## 像素界面
 
 - 状态图为800×1040，衣柜为800×1320；聊天缩略图可点开查看原图。
 - 低饱食、低精力、低心情和睡眠分别显示状态；休息时显示预计自然醒分钟数。
 - 衣柜明确标注穿戴中、已拥有、首套免费任选及余额不足差额。
 - 手记最多展示两行，溢出用省略号表示，完整内容使用 `/毛玉 日记`。
 - 图片不是可点击按钮，请在聊天框输入指令。
-- 1.1.0/1.2.0升级到1.2.1不改变数据库结构；仍应停机备份并保留plugin_data。
+- 1.1.0/1.2.x升级到1.3.0不改变数据库结构；仍应停机备份并保留plugin_data。
 
 ## 自测
 
@@ -155,4 +155,4 @@ AstrBot 接口依据官方文档及官方实现核对：
 
 ## 1.2.1 静态修复说明
 
-详见 STATIC_REVIEW.md。docs 中的图片为1.2.0历史布局示意，本次没有重新渲染。测试文件已更新/补充，但没有执行。
+详见 STATIC_REVIEW.md（历史修复记录）。docs 中的图片为1.2.0布局示意；1.3.0已重新运行测试和渲染检查，详见 TEST_REPORT.md。

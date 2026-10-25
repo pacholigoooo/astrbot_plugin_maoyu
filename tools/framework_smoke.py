@@ -37,6 +37,10 @@ async def main():
         context=Context(**kwargs)
         manager=StarManager(context,astrbot_config)
         if remote:
+            # Honor an explicitly configured trusted CA bundle; never disable TLS verification.
+            if os.environ.get('SSL_CERT_FILE'):
+                import ssl
+                manager._updater = type(manager._updater)(verify=ssl.create_default_context(cafile=os.environ['SSL_CERT_FILE']))
             await manager._updater.install('https://github.com/pacholigoooo/astrbot_plugin_maoyu')
         ok,error=await manager.load(specified_dir_name=source.name)
         assert ok,error

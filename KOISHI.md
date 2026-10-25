@@ -14,7 +14,7 @@
 在 Koishi 应用目录执行：
 
 ```
-npm install github:pacholigoooo/astrbot_plugin_maoyu#main
+npm install git+https://github.com/pacholigoooo/astrbot_plugin_maoyu.git#main
 python3 -m pip install -r node_modules/koishi-plugin-maoyu-courtyard/requirements.txt
 ```
 
@@ -27,7 +27,7 @@ Windows 可把 python3 换成 python。对于系统管理的Python，使用虚�
 备份数据并停止实例，在应用目录重新执行：
 
 ```
-npm install github:pacholigoooo/astrbot_plugin_maoyu#main
+npm install git+https://github.com/pacholigoooo/astrbot_plugin_maoyu.git#main
 ```
 
 然后重启。锁文件会记录Git提交；如npm保持旧提交，可先卸载本插件包再重新安装同一地址，数据目录不在node_modules中。不要删除数据目录。
