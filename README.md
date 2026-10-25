@@ -4,10 +4,10 @@
 
 支持 **AstrBot** 和 **Koishi**。本地存档，离线养成，18套东方主题装饰。
 
-![毛玉小院](docs/status.png)
-![东方衣柜，第1页](docs/wardrobe.png)
-![东方衣柜，第2页](docs/wardrobe-2.png)
-![东方衣柜，第3页](docs/wardrobe-3.png)
+![毛玉小院](https://raw.githubusercontent.com/pacholigoooo/astrbot_plugin_maoyu/main/docs/status.png)
+![东方衣柜，第1页](https://raw.githubusercontent.com/pacholigoooo/astrbot_plugin_maoyu/main/docs/wardrobe.png)
+![东方衣柜，第2页](https://raw.githubusercontent.com/pacholigoooo/astrbot_plugin_maoyu/main/docs/wardrobe-2.png)
+![东方衣柜，第3页](https://raw.githubusercontent.com/pacholigoooo/astrbot_plugin_maoyu/main/docs/wardrobe-3.png)
 
 ## AstrBot 安装
 
@@ -34,7 +34,7 @@ python3 -m pip install -r node_modules/koishi-plugin-maoyu-courtyard/requirement
 
 在控制台启用 `maoyu-courtyard`，发送 `毛玉 帮助`。
 
-需要 Koishi 4.18+、Node.js 18+、同一环境中的 Python 3.10+ 和 Pillow。Windows 可使用 `python`；虚拟环境请在插件配置中填写解释器路径。详细步骤见 [Koishi 安装指南](KOISHI.md)。
+需要 Koishi 4.18+、Node.js 18+、同一环境中的 Python 3.10+ 和 Pillow。Windows 可使用 `python`；虚拟环境请在插件配置中填写解释器路径。详细步骤见 [Koishi 安装指南](https://github.com/pacholigoooo/astrbot_plugin_maoyu/blob/main/KOISHI.md)。
 
 更新时重新安装上述 GitHub main 引用并重启插件。数据位于 Koishi 应用目录的 `data/maoyu-courtyard/`，与 AstrBot 存档分开。
 
@@ -81,7 +81,7 @@ Koishi 使用相同的“毛玉”指令，前缀以 Koishi 设置为准。卡�
 
 ## 项目资料
 
-- [更新日志](CHANGELOG.md) · [验证记录](TEST_REPORT.md) · [数据说明](PRIVACY.md) · [素材说明](ARTWORK.md)
+- [更新日志](https://github.com/pacholigoooo/astrbot_plugin_maoyu/blob/main/CHANGELOG.md) · [验证记录](https://github.com/pacholigoooo/astrbot_plugin_maoyu/blob/main/TEST_REPORT.md) · [数据说明](https://github.com/pacholigoooo/astrbot_plugin_maoyu/blob/main/PRIVACY.md) · [素材说明](https://github.com/pacholigoooo/astrbot_plugin_maoyu/blob/main/ARTWORK.md)
 - 代码采用 MIT；字体采用 SIL OFL 1.1。
 - 美术为 AI 生成的东方同人素材。东方Project相关权利归原权利人，本项目为非官方同人作品。
 - 玩法结构参考 [astrbot_plugin_pet](https://github.com/DITF16/astrbot_plugin_pet)，未复制其代码或图片。
