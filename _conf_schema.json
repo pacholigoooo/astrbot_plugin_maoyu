@@ -1,0 +1,32 @@
+{
+  "send_images": {
+    "description": "发送像素状态卡（关闭后仅文字；适用于不支持本地图片的平台）",
+    "type": "bool",
+    "default": true
+  },
+  "cooldown_scale": {
+    "description": "互动冷却倍率（0.1～10，默认1；不影响睡觉、签到）",
+    "type": "float",
+    "default": 1.0,
+    "slider": {
+      "min": 0.1,
+      "max": 10,
+      "step": 0.1
+    }
+  },
+  "utc_offset": {
+    "description": "签到日界线 UTC 时差（北京时间8，范围-12～14）",
+    "type": "float",
+    "default": 8.0,
+    "slider": {
+      "min": -12,
+      "max": 14,
+      "step": 0.5
+    }
+  },
+  "auto_backup": {
+    "description": "每天首次成功操作后自动备份SQLite，保留最近7份（UTC日期）",
+    "type": "bool",
+    "default": true
+  }
+}
